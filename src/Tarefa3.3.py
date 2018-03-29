@@ -28,11 +28,9 @@ for iteration in range(1000000):
 
 
 # testing output
-print("Output")
+print("\nOutput")
 print(dot(training_set_inputs, synaptic_weights))
-print('\n')
-print("Training data")
+print("\nTraining data")
 print(training_set_outputs)
-print('\n')
-print("Synaptic Weights")
+print("\nSynaptic Weights")
 print(synaptic_weights)

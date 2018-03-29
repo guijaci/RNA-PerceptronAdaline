@@ -21,12 +21,10 @@ for iteration in range(1000000):
 
 
 # testing output
-print("Output (w/o activation)")
+print("\nOutput (w/o activation)")
 print(dot(training_set_inputs, synaptic_weights))
-print('\n')
 # with thresholding
-print("Output (w/ activation)")
+print("\nOutput (w/ activation)")
 print(1 * (dot(training_set_inputs, synaptic_weights) > 0.5))
-print('\n')
-print("Synaptic Weights")
+print("\nSynaptic Weights")
 print(synaptic_weights)
