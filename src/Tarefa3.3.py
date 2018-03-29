@@ -1,4 +1,4 @@
-from numpy import array, random, dot, pi, sin, cos, ones, hstack, amax, asscalar
+from numpy import array, random, dot, pi, sin, cos, ones, hstack, amax
 
 f1 = lambda x: sin(x)
 f2 = lambda x: cos(x)
@@ -9,26 +9,23 @@ training_set_inputs = array(list(map(lambda x: [f1(x), f2(x), f3(x)], zarray)))
 # applying F function to f1, f2 and f3 (entries)
 training_set_outputs = dot(training_set_inputs, array([[.565, 2.657, .674]]).T) - pi
 
-# appending 1's column to train for the constant (a)
+# appending 1's column to train for the constant
 training_set_inputs = hstack((training_set_inputs, ones((15, 1))))
 
-# c - 1 neuron; r - 3 inputs (f1, f2, f3) + 1 constant (a); z pertains to [0, 2*pi)
+# synaptic_weights = array([[.565, 2.657, .674, -pi]]).T
 synaptic_weights = 2 * random.random((4, 1)) * pi
 for iteration in range(1000000):
-    sumError = 0
-    for i in range(15):
-        input_row = training_set_inputs[i]
-        output_row = asscalar(training_set_outputs[i])
-        output = asscalar(dot(input_row, synaptic_weights))
-        # error from training set e = (d - y) = (u - y)
-        error = output_row - output
-        sumError += abs(error)
-        # w(t+1) = w(t) + n * x * e
-        delta = .05 * array([input_row]).T * error
-        synaptic_weights += delta
+    # dot = sum of products between training set and the weights
+    output = dot(training_set_inputs, synaptic_weights)
+    # error from training set e = (d - y)
+    error = (training_set_outputs - output)
     # checking finalized condition
-    if amax(sumError / 15) < 1E-9:
+    if amax(abs(error)) < 1E-9:
         break
+    # w(t+1) = w(t) + sum (p = 0 .. P, n * x * e) / p
+    delta = .1 * dot(training_set_inputs.T, error) / 15
+    synaptic_weights += delta
+
 
 # testing output
 print("Output")
